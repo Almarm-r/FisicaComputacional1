@@ -6,7 +6,8 @@ print(fsolve(f,5000)) #f, dato referencia, solución cercana a #
 l=0 #left 
 r=3 #rigth
 m=2 #middle 
-for i in range(14):
+n= int(input("Escriba en número de interaciones"))
+for i in range(n):
   if f(l)*f(m)>0:
     l=m
   else:
