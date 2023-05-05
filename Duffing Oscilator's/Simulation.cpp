@@ -85,7 +85,7 @@ for (float i = 0 ; i<= t ; i = i+h){
     gnuarchivo << "set title 'Espacio de Fase '\n";
      gnuarchivo << "set xlabel 'Posición'\n";
      gnuarchivo << "set ylabel 'Momento'\n";
-     gnuarchivo << "plot 'xp.txt' using 1:2 with lines title 'Velocidad'\n\n";
+     gnuarchivo << "plot 'xp.txt' using 1:2 with lines title 'Momento'\n\n";
      gnuarchivo << "set terminal png\n";
      gnuarchivo << "set output 'Fase.png'\n";
      gnuarchivo << "replot\n";
