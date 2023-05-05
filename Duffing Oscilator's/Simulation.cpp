@@ -67,5 +67,32 @@ for (float i = 0 ; i<= t ; i = i+h){
   archivo.close();
   archivos.close();
   archivoss.close(); 
+  ofstream gnuarchivo("grafica.gp");
+     gnuarchivo << "set title 'Posición vs. Tiempo'\n";
+     gnuarchivo << "set xlabel 'Tiempo'\n";
+     gnuarchivo << "set ylabel 'Posicion'\n";
+     gnuarchivo << "plot 'tx.txt' using 1:2 with lines title 'Posicion'\n\n";
+     gnuarchivo << "set terminal png\n";
+     gnuarchivo << "set output 'posicion.png'\n";
+     gnuarchivo << "replot\n";     
+     gnuarchivo << "set title 'Velocidad vs. Tiempo'\n";
+     gnuarchivo << "set xlabel 'Tiempo'\n";
+     gnuarchivo << "set ylabel 'Velocidad'\n";
+     gnuarchivo << "plot 'tv.txt' using 1:2 with lines title 'Velocidad'\n\n";
+     gnuarchivo << "set terminal png\n";
+     gnuarchivo << "set output 'velocidad.png'\n";
+     gnuarchivo << "replot\n"; 
+    gnuarchivo << "set title 'Espacio de Fase '\n";
+     gnuarchivo << "set xlabel 'Posición'\n";
+     gnuarchivo << "set ylabel 'Momento'\n";
+     gnuarchivo << "plot 'xp.txt' using 1:2 with lines title 'Velocidad'\n\n";
+     gnuarchivo << "set terminal png\n";
+     gnuarchivo << "set output 'Fase.png'\n";
+     gnuarchivo << "replot\n";
+     gnuarchivo.close();
+
+     // ejecuta gnuplot para generar las graficas
+     system("gnuplot grafica.gp");
+
  return 0;
 }
