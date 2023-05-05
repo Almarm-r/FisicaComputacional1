@@ -6,7 +6,7 @@ using namespace std;
 
 int main (void)
 {
-  ofstream archivo("tx.txt") , archivos ("tv.txt"), archivoss("xp.txt");
+  ofstream archivo("tx.txt") , archivos ("tv.txt"), archivoss("xv.txt");
  float alfa, beta, gama, delta, omega ,p, m, h ;
  cout<<"alfa= ";
  cin>>alfa;
@@ -18,8 +18,6 @@ int main (void)
  cin>>delta;
  cout<<"omega= ";
  cin>>omega;
- cout<<"m= ";
- cin>>m;
   cout<<"h= ";
  cin>>h;
 
@@ -34,8 +32,7 @@ int main (void)
   if (h == 0){ cout<<"h= ";
  cin>>h;}
   else{
-    if (m ==0){cout<<"m= ";
- cin>>m;}else{
+    
 
 for (float i = 0 ; i<= t ; i = i+h){
  k1=gama*cos(omega*i)-(delta*v)-(alfa*u)-(beta*pow(u,3));
@@ -46,7 +43,7 @@ for (float i = 0 ; i<= t ; i = i+h){
  //u3=v+(k3*h);
  k4=gama*cos(omega*(i+h))-(delta*(v+(1/2)*k3*h))-(alfa*u)-(beta*pow(u,3));
  v=v+((k1+2*k2+2*k3+k4)/6)*h;
-  p = m * pow(v,2); 
+
  //
  K1=v;
  u1=v+(h/2);
@@ -58,12 +55,13 @@ for (float i = 0 ; i<= t ; i = i+h){
  u=u+((K1+2*K2+2*K3+K4)/6)*h;
 
  x=u;
+p = (0.5* pow(v,2))-(0.5*alfa*pow(x,2))+(0.25* beta* pow(x,4)); 
  archivo <<i<<"\t"<<x<<"\n";
   archivos<<i<<"\t"<<v<<"\n";
-  archivoss<<x<<"\t"<<p<<"\n"; 
+  archivoss<<x<<"\t"<<v<<"\n"; 
   
 
-}}}
+}}
   archivo.close();
   archivos.close();
   archivoss.close(); 
@@ -84,8 +82,8 @@ for (float i = 0 ; i<= t ; i = i+h){
      gnuarchivo << "replot\n"; 
     gnuarchivo << "set title 'Espacio de Fase '\n";
      gnuarchivo << "set xlabel 'Posición'\n";
-     gnuarchivo << "set ylabel 'Momento'\n";
-     gnuarchivo << "plot 'xp.txt' using 1:2 with lines title 'Momento'\n\n";
+     gnuarchivo << "set ylabel 'Velocidad'\n";
+     gnuarchivo << "plot 'xv.txt' using 1:2 with lines title 'Fase'\n\n";
      gnuarchivo << "set terminal png\n";
      gnuarchivo << "set output 'Fase.png'\n";
      gnuarchivo << "replot\n";
