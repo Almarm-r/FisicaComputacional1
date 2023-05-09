@@ -6,7 +6,7 @@ using namespace std;
 
 int main (void)
 {
-  ofstream archivo("tx.txt") , archivos ("tv.txt"), archivoss("xv.txt");
+  ofstream archivo("tx.txt") , archivos ("tv.txt"), archivoss("xp.txt");
  float alfa, beta, gama, delta, omega ,p, m, h ;
  cout<<"alfa= ";
  cin>>alfa;
@@ -20,6 +20,8 @@ int main (void)
  cin>>omega;
   cout<<"h= ";
  cin>>h;
+cout<<"m= ";
+ cin>>m;
 
  float u0=0,u,v0=0,v, t,x;
     cout<<"t= ";
@@ -55,10 +57,10 @@ for (float i = 0 ; i<= t ; i = i+h){
  u=u+((K1+2*K2+2*K3+K4)/6)*h;
 
  x=u;
-p = (0.5* pow(v,2))-(0.5*alfa*pow(x,2))+(0.25* beta* pow(x,4)); 
+p = m*v; 
  archivo <<i<<"\t"<<x<<"\n";
   archivos<<i<<"\t"<<v<<"\n";
-  archivoss<<x<<"\t"<<v<<"\n"; 
+  archivoss<<x<<"\t"<<p<<"\n"; 
   
 
 }}
