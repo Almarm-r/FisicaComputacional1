@@ -1,0 +1,31 @@
+real kc2 = 14.6;
+ func g = y*(1.-y);
+ 
+
+
+border a(t=0,2){x=t;y=0;label=1;}; 
+border b(t=0,1){x=2;y=t;label=2;}; 
+border c(t=0,2){x=2-t;y=1;}; 
+border d(t=0,1){x=0;y=1-t;label=4;}; 
+int n=20; 
+mesh Th=buildmesh(a(2*n)+b(n)+c(2*n)+d(n)); 
+
+// Fespace
+fespace Vh(Th, P1);
+Vh u, v;
+
+// Solve
+solve sound(u, v)
+   = int2d(Th)(
+        u*v * kc2
+      - dx(u)*dx(v)
+      - dy(u)*dy(v)
+   )
+   - int1d(Th, d)(
+        g * v
+   )
+   ;
+
+// Plot
+plot(Th, wait=1, ps="Malla.eps");
+plot(u, wait=1, ps="Sonido.eps");
