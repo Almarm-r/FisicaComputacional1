@@ -1,0 +1,54 @@
+// Parametros de entrada 
+ real sigma = 20; //Valor de la malla 
+ real kc2 =14.6; //Valor propio 
+ func g = y*(1.-y); // g sobre la condición de frontera
+//Malla  
+border a(t=0,2){x=t;y=0;label=1;}; 
+border e(t=0,1){x=2;y=t;label=2;}; 
+border c(t=0,2){x=2-t;y=1;}; 
+border d(t=0,1){x=0;y=1-t;label=4;}; 
+int n=30; 
+mesh Th=buildmesh(a(2*n)+e(n)+c(2*n)+d(n)); 
+fespace Vh(Th, P1); // Espacio de los elementos finitos 
+	Vh u1, u2;
+
+
+// Encontrar los vectores propios y otras soluciones. 
+// OP = A - sigma B ; // The shifted matrix
+varf op(u1, u2)
+  = int2d(Th)(
+        dx(u1)*dx(u2)
+      + dy(u1)*dy(u2)
+      - sigma* u1*u2
+   )
+   ;
+
+varf b([u1], [u2])
+   = int2d(Th)(
+       u1*u2
+   )
+   ; 
+
+matrix OP = op(Vh, Vh, solver=Crout, factorize=1);
+matrix B = b(Vh, Vh, solver=CG, eps=1e-20);
+
+// Eigen values
+int nev=20; // Valores propios que que no pasan de sigma 
+
+real[int] ev(nev);  // Adjunto valor propio 
+Vh[int] eV(nev);    // adjunta vector propio 
+
+int k=EigenValue(OP, B, sym=true, sigma=sigma, value=ev, vector=eV,
+   tol=1e-10, maxit=0, ncv=0);
+
+// Graficas 
+ for (int i = 0; i < k; i++){
+ u1 = eV[i];
+ real gg = int2d(Th)(dx(u1)*dx(u1) + dy(u1)*dy(u1));
+ real mm = int2d(Th)(u1*u1) ;
+ cout << "lambda[" << i << "] = " << ev[i] << ", err= " << int2d(Th)(dx(u1)*dx(u1) +dy(u1)*dy(u1) - (ev[i])*u1*u1) << endl;
+ plot(eV[i], cmm="Eigen Vector "+i+" value ="+ev[i], wait=true, value=true);
+ }
+plot(Th, wait=1, ps="Malla.eps");
+plot(u1, wait=1, ps="Sonido.eps");
+
